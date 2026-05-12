@@ -16,8 +16,14 @@ body {
 }
 
 .screen.active            { display: block; }
-#screen-mode.active       { display: flex; flex-direction: row; }
 #screen-topic.active      { display: flex; align-items: center; justify-content: center; }
+
+#screen-mode {
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+}
+#screen-mode.active       { display: flex; }
 
 /* ── Screen 1: Intro ─────────────────────────────────── */
 #screen-intro { position: relative; }
@@ -43,7 +49,8 @@ body {
 
 /* ── Screen 2: Mode Select ───────────────────────────── */
 .mode-half {
-  flex: 1;
+  width: 50%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,18 +60,12 @@ body {
   background: #cdffd8;
   cursor: pointer;
   transition: background 0.15s ease;
+  border-right: 2px solid rgba(42, 26, 14, 0.2);
 }
 
 .mode-single:hover { background: #b3f0c3; }
 
 .mode-duo { background: #94b9ff; }
-
-.mode-divider {
-  width: 2px;
-  height: 100%;
-  background: rgba(42, 26, 14, 0.2);
-  flex-shrink: 0;
-}
 
 .mode-content {
   display: flex;
