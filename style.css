@@ -303,7 +303,8 @@ body {
   margin-bottom: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
 }
 
 .temp-label {
@@ -312,28 +313,102 @@ body {
   color: rgba(42, 26, 14, 0.55);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  text-align: center;
 }
 
-.gauge-bar {
+/* Thermometer shape */
+.thermometer {
   display: flex;
-  gap: 5px;
-  height: 22px;
-  width: 180px;
+  flex-direction: column;
+  align-items: center;
 }
 
-.gauge-segment {
-  flex: 1;
-  border-radius: 4px;
-  background: rgba(42, 26, 14, 0.1);
-  transition: background 0.4s ease;
+.thermo-tube {
+  width: 22px;
+  height: 130px;
+  border: 2.5px solid rgba(42, 26, 14, 0.5);
+  border-bottom: none;
+  border-radius: 11px 11px 0 0;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.thermo-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(to top, #3a7ca5 0%, #f2c14e 33%, #ea7832 67%, #d9554a 100%);
+  transition: height 0.5s ease;
+}
+
+.thermo-bulb {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(42, 26, 14, 0.5);
+  background: rgba(255, 255, 255, 0.35);
+  margin-top: -2px;
+  transition: background 0.45s ease;
 }
 
 .temp-status {
   font-family: 'Aileron', system-ui, sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: #2a1a0e;
   font-weight: 700;
+  text-align: center;
+  max-width: 160px;
 }
+
+/* Loss modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 26, 14, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.modal-overlay.hidden { display: none; }
+
+.modal-box {
+  background: #f9f6f0;
+  border-radius: 16px;
+  padding: 36px 44px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 8px 32px rgba(42, 26, 14, 0.18);
+}
+
+.modal-text {
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-size: 1rem;
+  color: #2a1a0e;
+  line-height: 1.75;
+}
+
+.modal-ok-btn {
+  background: #ea7832;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 36px;
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.modal-ok-btn:hover { background: #d56920; }
 
 /* ── Screen 5: End Screen ────────────────────────────── */
 .end-content {

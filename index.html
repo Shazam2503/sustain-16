@@ -66,13 +66,21 @@
       <div class="puzzle-right-panel">
         <div class="temp-gauge">
           <p class="temp-label">Mistake tracker</p>
-          <div class="gauge-bar">
-            <div class="gauge-segment"></div>
-            <div class="gauge-segment"></div>
-            <div class="gauge-segment"></div>
-            <div class="gauge-segment"></div>
+          <div class="thermometer">
+            <div class="thermo-tube">
+              <div id="thermo-fill" class="thermo-fill"></div>
+            </div>
+            <div id="thermo-bulb" class="thermo-bulb"></div>
           </div>
           <p id="temp-label-text" class="temp-status">Stable climate</p>
+        </div>
+      </div>
+
+      <!-- Loss popup modal -->
+      <div id="loss-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+          <p class="modal-text">Uh Oh! You're out of tries. No more attempts left for today.<br><br>Come back tomorrow for a new topic and another chance to play.<br><br>Now, it's time for the reveal!</p>
+          <button id="loss-modal-ok" class="modal-ok-btn">OK</button>
         </div>
       </div>
     </div>

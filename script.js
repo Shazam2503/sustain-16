@@ -31,7 +31,7 @@ const PUZZLE1_GROUPS = [
 
 const ARCHETYPE_MESSAGES = {
   actions_solutions:  'The Activist ✊ — You jumped straight to what to do. Plan your next trip with one ecotourism principle in mind - pick a destination that gives back to its community.',
-  places_observation: 'The Explorer 🦭 — You think about where to go. Find one ecotourism destination within 2 hours of where you live - there\'s probably one you\'ve never heard of.',
+  places_observation: 'The Explorer 🧭 — You think about where to go. Find one ecotourism destination within 2 hours of where you live - there\'s probably one you\'ve never heard of.',
   causes_mechanisms:  'The Scientist 🔬 — You spot the principles before the action. Today, read up on what separates real ecotourism from greenwashing - it\'s a surprisingly murky industry.',
   systems_people:     'The Observer 👁 — You see who\'s holding things together. Look up the rangers, guides, and stewards near you - many run free walks you can join.'
 };
@@ -44,10 +44,17 @@ const TEMP_LABELS = [
   'Tipping point reached.'
 ];
 
-const SEG_COLORS = ['#3a7ca5', '#f2c14e', '#ea7832', '#d9554a'];
+// Bulb colour at each mistake count (0–4)
+const BULB_COLORS = [
+  'rgba(255,255,255,0.35)',
+  '#3a7ca5',
+  '#f2c14e',
+  '#ea7832',
+  '#d9554a'
+];
 
 // ── Puzzle 1 state ───────────────────────────────────────────────────────────
-let p1 = {};
+var p1 = {};
 
 function resetP1State() {
   p1 = {
@@ -175,12 +182,11 @@ function addSolvedGroupCard(group) {
   panel.appendChild(div);
 }
 
-// ── Temperature gauge ────────────────────────────────────────────────────────
+// ── Thermometer gauge ────────────────────────────────────────────────────────
 function updateGauge() {
-  var segs = document.querySelectorAll('#screen-puzzle-1 .gauge-segment');
-  segs.forEach(function (seg, i) {
-    seg.style.background = i < p1.mistakes ? SEG_COLORS[i] : '';
-  });
+  var fillPercent = (p1.mistakes / 4) * 100;
+  document.getElementById('thermo-fill').style.height = fillPercent + '%';
+  document.getElementById('thermo-bulb').style.background = BULB_COLORS[p1.mistakes];
   document.getElementById('temp-label-text').textContent = TEMP_LABELS[p1.mistakes];
 }
 
@@ -216,27 +222,7 @@ function onHint() {
 }
 
 // ── Game end ─────────────────────────────────────────────────────────────────
-function endGame(won) {
-  p1.gameOver = true;
-
-  var unsolved = PUZZLE1_GROUPS.filter(function (g) { return !p1.solvedIds.includes(g.id); });
-  var delay = 0;
-
-  unsolved.forEach(function (group) {
-    setTimeout(function () {
-      Array.from(document.querySelectorAll('#puzzle-grid .word-tile'))
-        .filter(function (t) { return group.words.includes(t.dataset.word); })
-        .forEach(function (t) {
-          t.style.background = group.color;
-          t.style.color = '#fff';
-          t.style.borderColor = group.color;
-        });
-      addSolvedGroupCard(group);
-    }, delay);
-    delay += 700;
-  });
-
-  // Persist to localStorage
+function saveResults(won) {
   localStorage.setItem('theme1_firstGroup', p1.firstGroupId || '');
   localStorage.setItem('theme1_mistakes',   p1.mistakes);
   localStorage.setItem('theme1_hintsUsed',  p1.hintsUsed);
@@ -250,11 +236,63 @@ function endGame(won) {
 
   var completed = parseInt(localStorage.getItem('puzzlesCompleted') || '0', 10) + 1;
   localStorage.setItem('puzzlesCompleted', completed);
+  return completed;
+}
 
-  setTimeout(function () {
-    prepareEndScreen1(won, completed);
-    showScreen('screen-end-1');
-  }, delay + 900);
+function revealAllGroups(onComplete) {
+  var unsolved = PUZZLE1_GROUPS.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  var delay = 0;
+
+  unsolved.forEach(function (group) {
+    setTimeout(function () {
+      Array.from(document.querySelectorAll('#puzzle-grid .word-tile'))
+        .filter(function (t) { return group.words.includes(t.dataset.word); })
+        .forEach(function (t) {
+          t.style.background  = group.color;
+          t.style.color       = '#fff';
+          t.style.borderColor = group.color;
+        });
+      addSolvedGroupCard(group);
+    }, delay);
+    delay += 700;
+  });
+
+  // Reveal visible for at least 10 seconds
+  setTimeout(onComplete, Math.max(delay + 900, 10000));
+}
+
+function showLossModal(onDismiss) {
+  var modal = document.getElementById('loss-modal');
+  modal.classList.remove('hidden');
+
+  var autoTimer = setTimeout(function () { dismiss(); }, 4000);
+
+  document.getElementById('loss-modal-ok').onclick = function () {
+    clearTimeout(autoTimer);
+    dismiss();
+  };
+
+  function dismiss() {
+    modal.classList.add('hidden');
+    onDismiss();
+  }
+}
+
+function endGame(won) {
+  p1.gameOver = true;
+  var completed = saveResults(won);
+
+  if (won) {
+    prepareEndScreen1(true, completed);
+    setTimeout(function () { showScreen('screen-end-1'); }, 600);
+  } else {
+    showLossModal(function () {
+      revealAllGroups(function () {
+        prepareEndScreen1(false, completed);
+        showScreen('screen-end-1');
+      });
+    });
+  }
 }
 
 // ── End screen setup ─────────────────────────────────────────────────────────
@@ -280,6 +318,7 @@ function initPuzzle1() {
   var banner = document.getElementById('hint-banner');
   banner.textContent = '';
   banner.classList.add('hidden');
+  document.getElementById('loss-modal').classList.add('hidden');
 }
 
 // ── Event listeners ──────────────────────────────────────────────────────────
