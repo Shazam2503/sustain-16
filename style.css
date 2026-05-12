@@ -445,9 +445,24 @@ body {
 }
 
 .fact-card {
-  background: rgba(255, 255, 255, 0.65);
+  background: #f9f6f0;
   border-radius: 16px;
   padding: 32px 36px;
+  box-shadow: 0 2px 12px rgba(42, 26, 14, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.fact-card-heading {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: #2a1a0e;
+  text-align: center;
+}
+
+.fact-card-text {
   font-family: 'Aileron', system-ui, sans-serif;
   font-size: clamp(0.88rem, 1.3vw, 1rem);
   color: #2a1a0e;
@@ -456,9 +471,11 @@ body {
 }
 
 .archetype-card {
-  background: rgba(255, 255, 255, 0.75);
+  background: #f9f6f0;
   border-radius: 16px;
   padding: 32px 36px;
+  box-shadow: 0 2px 12px rgba(42, 26, 14, 0.08);
+  border-left: 4px solid #ea7832;
   text-align: center;
   display: flex;
   flex-direction: column;

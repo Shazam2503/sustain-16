@@ -277,7 +277,7 @@ function showKnowledgeNuggetBtn() {
 function endGame(won) {
   p1.gameOver = true;
   var completed = saveResults(won);
-  prepareEndScreen1(won, completed);
+  prepareEndScreen1(won);
 
   if (won) {
     showKnowledgeNuggetBtn();
@@ -291,9 +291,9 @@ function endGame(won) {
 }
 
 // ── End screen setup ─────────────────────────────────────────────────────────
-function prepareEndScreen1(won, completedCount) {
+function prepareEndScreen1(won) {
   var card = document.getElementById('archetype-card');
-  if (won && completedCount >= ARCHETYPE_UNLOCK_THRESHOLD && p1.firstGroupId) {
+  if (won && p1.firstGroupId) {
     document.getElementById('archetype-message').textContent =
       ARCHETYPE_MESSAGES[p1.firstGroupId];
     card.classList.remove('hidden');
