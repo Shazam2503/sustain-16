@@ -48,14 +48,51 @@
       </div>
     </div>
 
-    <!-- Screen 4a: Puzzle 1 (placeholder) -->
+    <!-- Screen 4a: Puzzle 1 - Theme 1 -->
     <div id="screen-puzzle-1" class="screen">
-      <p>Puzzle 1 — coming soon</p>
+      <div class="puzzle-left-panel">
+        <button class="how-to-play-link">How to play</button>
+        <div id="solved-groups-panel"></div>
+      </div>
+      <div class="puzzle-centre">
+        <p class="topic-heading">Today's theme: Off the beaten path, on purpose.</p>
+        <div id="hint-banner" class="hint-banner hidden"></div>
+        <div id="puzzle-grid" class="puzzle-grid"></div>
+        <div class="puzzle-actions">
+          <button id="hint-btn" class="hint-btn" disabled>Hint</button>
+          <button id="submit-btn" class="submit-btn" disabled>Submit</button>
+        </div>
+      </div>
+      <div class="puzzle-right-panel">
+        <div class="temp-gauge">
+          <p class="temp-label">Mistake tracker</p>
+          <div class="gauge-bar">
+            <div class="gauge-segment"></div>
+            <div class="gauge-segment"></div>
+            <div class="gauge-segment"></div>
+            <div class="gauge-segment"></div>
+          </div>
+          <p id="temp-label-text" class="temp-status">Stable climate</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Screen 4b: Puzzle 2 (placeholder) -->
+    <!-- Screen 4b: Puzzle 2 - Theme 2 (placeholder) -->
     <div id="screen-puzzle-2" class="screen">
       <p>Puzzle 2 — coming soon</p>
+    </div>
+
+    <!-- Screen 5a: End Screen - Theme 1 -->
+    <div id="screen-end-1" class="screen">
+      <div class="end-content">
+        <div class="fact-card">
+          <p>Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.</p>
+        </div>
+        <div id="archetype-card" class="archetype-card hidden">
+          <h2 class="archetype-heading">Your solver DNA reveals that you are…</h2>
+          <p id="archetype-message" class="archetype-message"></p>
+        </div>
+      </div>
     </div>
 
   </div>
