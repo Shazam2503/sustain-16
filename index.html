@@ -4,13 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sustain 16</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
+
+    <!-- Screen 1: Intro -->
     <div id="screen-intro" class="screen active">
-      <h1>Sustain 16</h1>
+      <img src="images/hero.jpg" alt="Sustain 16" class="hero-img">
+      <div id="play-btn-overlay"></div>
     </div>
+
+    <!-- Screen 2: Mode Select -->
+    <div id="screen-mode" class="screen">
+      <div class="mode-half mode-single">
+        <div class="mode-content">
+          <span class="mode-title">Single Player Mode</span>
+        </div>
+      </div>
+      <div class="mode-divider"></div>
+      <div class="mode-half mode-duo">
+        <div class="mode-content">
+          <span class="mode-launching">Launching Soon</span>
+          <span class="mode-duo-label">Duo Player Mode 🎮</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Topic Select (placeholder) -->
+    <div id="screen-topic" class="screen">
+      <p>Topic Select — coming soon</p>
+    </div>
+
   </div>
   <script src="script.js"></script>
 </body>
