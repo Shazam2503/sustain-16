@@ -150,7 +150,7 @@ body {
 /* ── Screen 4: Puzzle ────────────────────────────────── */
 .puzzle-left-panel,
 .puzzle-right-panel {
-  width: 220px;
+  width: 280px;
   flex-shrink: 0;
   padding: 28px 20px;
   display: flex;
