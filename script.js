@@ -12,3 +12,13 @@ document.getElementById('play-btn-overlay').addEventListener('click', function (
 document.querySelector('.mode-single').addEventListener('click', function () {
   showScreen('screen-topic');
 });
+
+document.querySelector('.topic-left').addEventListener('click', function () {
+  localStorage.setItem('selectedTheme', '1');
+  showScreen('screen-puzzle-1');
+});
+
+document.querySelector('.topic-right').addEventListener('click', function () {
+  localStorage.setItem('selectedTheme', '2');
+  showScreen('screen-puzzle-2');
+});

@@ -16,14 +16,18 @@ body {
 }
 
 .screen.active            { display: block; }
-#screen-topic.active      { display: flex; align-items: center; justify-content: center; }
 
-#screen-mode {
+#screen-mode,
+#screen-topic {
   flex-direction: row;
   width: 100vw;
   height: 100vh;
 }
-#screen-mode.active       { display: flex; }
+#screen-mode.active,
+#screen-topic.active      { display: flex; }
+
+#screen-puzzle-1.active,
+#screen-puzzle-2.active   { display: flex; align-items: center; justify-content: center; }
 
 /* ── Screen 1: Intro ─────────────────────────────────── */
 #screen-intro { position: relative; }
@@ -85,5 +89,46 @@ body {
   font-family: 'Aileron', 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 700;
   font-size: clamp(1.1rem, 2.2vw, 1.9rem);
+  color: #2a1a0e;
+}
+
+/* ── Screen 3: Topic Select ──────────────────────────── */
+.topic-half {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.topic-left {
+  background: #cdffd8;
+  border-right: 2px solid rgba(42, 26, 14, 0.2);
+}
+
+.topic-left:hover  { background: #b3f0c3; }
+
+.topic-right       { background: #94b9ff; }
+
+.topic-right:hover { background: #7fa8f0; }
+
+.topic-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.topic-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: #2a1a0e;
+}
+
+.topic-subtitle {
+  font-family: 'Aileron', 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: clamp(0.9rem, 1.6vw, 1.3rem);
   color: #2a1a0e;
 }
