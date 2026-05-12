@@ -257,39 +257,34 @@ function revealAllGroups(onComplete) {
     delay += 700;
   });
 
-  // Reveal visible for at least 10 seconds
-  setTimeout(onComplete, Math.max(delay + 900, 10000));
+  setTimeout(onComplete, delay + 900);
 }
 
 function showLossModal(onDismiss) {
   var modal = document.getElementById('loss-modal');
   modal.classList.remove('hidden');
 
-  var autoTimer = setTimeout(function () { dismiss(); }, 4000);
-
   document.getElementById('loss-modal-ok').onclick = function () {
-    clearTimeout(autoTimer);
-    dismiss();
-  };
-
-  function dismiss() {
     modal.classList.add('hidden');
     onDismiss();
-  }
+  };
+}
+
+function showKnowledgeNuggetBtn() {
+  document.getElementById('knowledge-nugget-btn').classList.remove('hidden');
 }
 
 function endGame(won) {
   p1.gameOver = true;
   var completed = saveResults(won);
+  prepareEndScreen1(won, completed);
 
   if (won) {
-    prepareEndScreen1(true, completed);
-    setTimeout(function () { showScreen('screen-end-1'); }, 600);
+    showKnowledgeNuggetBtn();
   } else {
     showLossModal(function () {
       revealAllGroups(function () {
-        prepareEndScreen1(false, completed);
-        showScreen('screen-end-1');
+        showKnowledgeNuggetBtn();
       });
     });
   }
@@ -319,6 +314,7 @@ function initPuzzle1() {
   banner.textContent = '';
   banner.classList.add('hidden');
   document.getElementById('loss-modal').classList.add('hidden');
+  document.getElementById('knowledge-nugget-btn').classList.add('hidden');
 }
 
 // ── Event listeners ──────────────────────────────────────────────────────────
@@ -343,3 +339,7 @@ document.querySelector('.topic-right').addEventListener('click', function () {
 
 document.getElementById('submit-btn').addEventListener('click', onSubmit);
 document.getElementById('hint-btn').addEventListener('click', onHint);
+
+document.getElementById('knowledge-nugget-btn').addEventListener('click', function () {
+  showScreen('screen-end-1');
+});

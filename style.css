@@ -410,6 +410,29 @@ body {
 }
 .modal-ok-btn:hover { background: #d56920; }
 
+/* Knowledge nugget button (left panel, shown after all groups revealed) */
+.knowledge-nugget-btn {
+  display: block;
+  margin-top: 16px;
+  background: transparent;
+  border: 2px solid #ea7832;
+  border-radius: 50px;
+  color: #ea7832;
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s ease, color 0.15s ease;
+  width: 100%;
+}
+.knowledge-nugget-btn:hover {
+  background: #ea7832;
+  color: #fff;
+}
+.knowledge-nugget-btn.hidden { display: none; }
+
 /* ── Screen 5: End Screen ────────────────────────────── */
 .end-content {
   display: flex;
