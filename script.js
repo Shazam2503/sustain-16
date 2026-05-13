@@ -29,11 +29,27 @@ const PUZZLE1_GROUPS = [
   }
 ];
 
-const ARCHETYPE_MESSAGES = {
-  actions_solutions:  'The Activist ✊ — You jumped straight to what to do. Plan your next trip with one ecotourism principle in mind - pick a destination that gives back to its community.',
-  places_observation: 'The Explorer 🧭 — You think about where to go. Find one ecotourism destination within 2 hours of where you live - there\'s probably one you\'ve never heard of.',
-  causes_mechanisms:  'The Scientist 🔬 — You spot the principles before the action. Today, read up on what separates real ecotourism from greenwashing - it\'s a surprisingly murky industry.',
-  systems_people:     'The Observer 👁 — You see who\'s holding things together. Look up the rangers, guides, and stewards near you - many run free walks you can join.'
+const ARCHETYPES = {
+  actions_solutions: {
+    name:  'The Activist ✊',
+    image: 'images/activist.jpeg',
+    text:  'You jumped straight to what to do. Plan your next trip with one ecotourism principle in mind - pick a destination that gives back to its community.'
+  },
+  places_observation: {
+    name:  'The Explorer 🧭',
+    image: 'images/explorer.jpeg',
+    text:  "You think about where to go. Find one ecotourism destination within 2 hours of where you live - there's probably one you've never heard of."
+  },
+  causes_mechanisms: {
+    name:  'The Scientist 🔬',
+    image: 'images/scientist.jpeg',
+    text:  "You spot the principles before the action. Today, read up on what separates real ecotourism from greenwashing - it's a surprisingly murky industry."
+  },
+  systems_people: {
+    name:  'The Observer 👁',
+    image: 'images/observer.jpeg',
+    text:  "You see who's holding things together. Look up the rangers, guides, and stewards near you - many run free walks you can join."
+  }
 };
 
 const TEMP_LABELS = [
@@ -292,14 +308,13 @@ function endGame(won) {
 
 // ── End screen setup ─────────────────────────────────────────────────────────
 function prepareEndScreen1(won) {
-  var card = document.getElementById('archetype-card');
+  var teaser = document.getElementById('archetype-teaser');
   if (won && p1.firstGroupId) {
-    document.getElementById('archetype-message').textContent =
-      ARCHETYPE_MESSAGES[p1.firstGroupId];
-    card.classList.remove('hidden');
+    teaser.classList.remove('hidden');
   } else {
-    card.classList.add('hidden');
+    teaser.classList.add('hidden');
   }
+  document.getElementById('archetype-modal').classList.add('hidden');
 }
 
 // ── Puzzle 1 initialise ──────────────────────────────────────────────────────
@@ -353,4 +368,22 @@ document.getElementById('htp-modal').addEventListener('click', function (e) {
 
 document.getElementById('knowledge-nugget-btn').addEventListener('click', function () {
   showScreen('screen-end-1');
+});
+
+document.getElementById('archetype-teaser').addEventListener('click', function () {
+  var archetype = ARCHETYPES[p1.firstGroupId];
+  if (!archetype) return;
+  document.getElementById('archetype-img').src = archetype.image;
+  document.getElementById('archetype-img').alt = archetype.name;
+  document.getElementById('archetype-name').textContent = archetype.name;
+  document.getElementById('archetype-desc').textContent = archetype.text;
+  document.getElementById('archetype-modal').classList.remove('hidden');
+});
+
+document.getElementById('archetype-popup-close').addEventListener('click', function () {
+  document.getElementById('archetype-modal').classList.add('hidden');
+});
+
+document.getElementById('archetype-modal').addEventListener('click', function (e) {
+  if (e.target === this) this.classList.add('hidden');
 });

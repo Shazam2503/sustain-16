@@ -111,12 +111,29 @@
     <div id="screen-end-1" class="screen">
       <div class="end-content">
         <div class="fact-card">
-          <h2 class="fact-card-heading">Knowledge Nugget 🌿</h2>
+          <h2 class="fact-card-heading">Knowledge Nugget 💡</h2>
           <p class="fact-card-text">Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.</p>
         </div>
-        <div id="archetype-card" class="archetype-card hidden">
-          <h2 class="archetype-heading">Your solver DNA reveals that you are…</h2>
-          <p id="archetype-message" class="archetype-message"></p>
+        <div id="archetype-teaser" class="archetype-teaser hidden">
+          Curious what your Solver DNA reveals about your personality? Tap to find out!
+        </div>
+      </div>
+
+      <!-- Archetype popup modal -->
+      <div id="archetype-modal" class="modal-overlay hidden">
+        <div class="archetype-popup">
+          <button id="archetype-popup-close" class="htp-close">✕</button>
+          <div class="archetype-popup-body">
+            <img id="archetype-img" class="archetype-img" src="" alt="">
+            <div class="archetype-popup-right">
+              <h2 id="archetype-name" class="archetype-name"></h2>
+              <p id="archetype-desc" class="archetype-desc"></p>
+            </div>
+          </div>
+          <div class="archetype-popup-footer">
+            <hr class="archetype-divider">
+            <p class="archetype-share">Compare your Solver DNA! Screenshot your result and challenge your friends to discover theirs. 📸</p>
+          </div>
         </div>
       </div>
     </div>
