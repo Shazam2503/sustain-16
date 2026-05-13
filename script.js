@@ -381,6 +381,42 @@ function endGame(won) {
   }
 }
 
+// ── Countdown timer ───────────────────────────────────────────────────────────
+var countdownInterval = null;
+
+function getNextPuzzleTime() {
+  var now = new Date();
+  var target = new Date(now);
+  target.setHours(8, 0, 0, 0);
+  if (now >= target) {
+    target.setDate(target.getDate() + 1);
+  }
+  return target;
+}
+
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  function tick() {
+    var diff = getNextPuzzleTime() - new Date();
+    if (diff <= 0) {
+      document.getElementById('countdown-timer').textContent = '00:00:00';
+      clearInterval(countdownInterval);
+      return;
+    }
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('countdown-timer').textContent =
+      String(h).padStart(2, '0') + ':' +
+      String(m).padStart(2, '0') + ':' +
+      String(s).padStart(2, '0');
+  }
+
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
+
 // ── End screen setup ──────────────────────────────────────────────────────────
 function prepareEndScreen(won) {
   var teaser = document.getElementById('archetype-teaser');
@@ -402,6 +438,7 @@ function prepareEndScreenContent() {
   } else {
     link.classList.add('hidden');
   }
+  startCountdown();
 }
 
 // ── Puzzle initialise ─────────────────────────────────────────────────────────

@@ -577,6 +577,33 @@ body {
 }
 .archetype-teaser.hidden { display: none; }
 
+/* Countdown timer card */
+.countdown-card {
+  background: #f9f6f0;
+  border-radius: 16px;
+  padding: 24px 36px;
+  box-shadow: 0 2px 12px rgba(42, 26, 14, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.countdown-label {
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #2a1a0e;
+}
+
+.countdown-timer {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  color: #ea7832;
+  line-height: 1;
+}
+
 /* Archetype popup */
 .archetype-popup {
   background: #f9f6f0;
