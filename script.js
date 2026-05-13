@@ -287,6 +287,8 @@ function showLossModal(onDismiss) {
 }
 
 function showKnowledgeNuggetBtn() {
+  document.getElementById('puzzle-grid').classList.add('hidden');
+  document.querySelector('.puzzle-actions').classList.add('hidden');
   document.getElementById('knowledge-nugget-btn').classList.remove('hidden');
 }
 
@@ -296,6 +298,8 @@ function endGame(won) {
   prepareEndScreen1(won);
 
   if (won) {
+    document.getElementById('puzzle-grid').classList.add('hidden');
+    document.getElementById('victory-message').classList.remove('hidden');
     showKnowledgeNuggetBtn();
   } else {
     showLossModal(function () {
@@ -331,6 +335,9 @@ function initPuzzle1() {
   document.getElementById('loss-modal').classList.add('hidden');
   document.getElementById('htp-modal').classList.add('hidden');
   document.getElementById('knowledge-nugget-btn').classList.add('hidden');
+  document.getElementById('victory-message').classList.add('hidden');
+  document.getElementById('puzzle-grid').classList.remove('hidden');
+  document.querySelector('.puzzle-actions').classList.remove('hidden');
 }
 
 // ── Event listeners ──────────────────────────────────────────────────────────

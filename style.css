@@ -172,7 +172,8 @@ body {
   background: none;
   border: none;
   font-family: 'Aileron', system-ui, sans-serif;
-  font-size: 0.88rem;
+  font-weight: 700;
+  font-size: 1rem;
   color: #2a1a0e;
   cursor: pointer;
   text-decoration: underline;
@@ -272,6 +273,33 @@ body {
 
 .hint-btn:disabled,
 .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.puzzle-grid.hidden   { display: none; }
+.puzzle-actions.hidden { display: none; }
+
+/* Victory message */
+.victory-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.victory-message.hidden { display: none; }
+
+.victory-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.2rem);
+  color: #ea7832;
+  line-height: 1.1;
+}
+
+.victory-subtitle {
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: #2a1a0e;
+}
 
 /* Solved groups panel */
 .solved-group {
@@ -461,22 +489,21 @@ body {
 }
 .modal-ok-btn:hover { background: #d56920; }
 
-/* Knowledge nugget button (left panel, shown after all groups revealed) */
+/* Knowledge nugget button (centre panel, shown after game ends) */
 .knowledge-nugget-btn {
   display: block;
-  margin-top: 16px;
+  margin-top: 8px;
   background: transparent;
   border: 2px solid #ea7832;
   border-radius: 50px;
   color: #ea7832;
   font-family: 'Aileron', system-ui, sans-serif;
   font-weight: 700;
-  font-size: 0.8rem;
-  padding: 10px 14px;
+  font-size: 0.9rem;
+  padding: 12px 28px;
   cursor: pointer;
   text-align: center;
   transition: background 0.15s ease, color 0.15s ease;
-  width: 100%;
 }
 .knowledge-nugget-btn:hover {
   background: #ea7832;
