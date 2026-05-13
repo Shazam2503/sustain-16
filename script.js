@@ -433,14 +433,14 @@ document.querySelector('.mode-single').addEventListener('click', function () {
   showScreen('screen-topic');
 });
 
-document.querySelector('.topic-left').addEventListener('click', function () {
+document.getElementById('topic-overlay-1').addEventListener('click', function () {
   localStorage.setItem('selectedTheme', '1');
   currentThemeConfig = THEME1_CONFIG;
   initPuzzle();
   showScreen('screen-puzzle-1');
 });
 
-document.querySelector('.topic-right').addEventListener('click', function () {
+document.getElementById('topic-overlay-2').addEventListener('click', function () {
   localStorage.setItem('selectedTheme', '2');
   currentThemeConfig = THEME2_CONFIG;
   initPuzzle();

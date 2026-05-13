@@ -18,14 +18,12 @@ body {
 .screen.active { display: block; }
 
 /* Split screens: row flex */
-#screen-mode,
-#screen-topic {
+#screen-mode {
   flex-direction: row;
   width: 100vw;
   height: 100vh;
 }
-#screen-mode.active,
-#screen-topic.active { display: flex; }
+#screen-mode.active { display: flex; }
 
 /* Puzzle screens */
 #screen-puzzle-1,
@@ -109,64 +107,27 @@ body {
 }
 
 /* ── Screen 3: Topic Select ──────────────────────────── */
-.topic-half {
-  width: 50%;
+#screen-topic { position: relative; }
+
+.screen3-bg {
+  width: 100%;
   height: 100%;
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  transition: filter 0.15s ease;
-}
-
-.topic-left {
-  background: #cdffd8;
-  border-right: 2px solid rgba(42, 26, 14, 0.2);
-}
-.topic-left:hover  { filter: brightness(0.93); }
-
-.topic-right       { background: #94b9ff; }
-.topic-right:hover { filter: brightness(0.93); }
-
-.topic-text-section {
-  position: absolute;
-  top: 22%;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  padding: 0 24px;
-}
-
-.topic-image-section {
-  /* layout handled by .topic-img */
-}
-
-.topic-img {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 75vh;
-  width: auto;
-  max-width: 90%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
 
-.topic-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  color: #2a1a0e;
+.topic-overlay {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  cursor: pointer;
+  background: transparent;
 }
 
-.topic-subtitle {
-  font-family: 'Aileron', 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: clamp(0.9rem, 1.6vw, 1.3rem);
-  color: #2a1a0e;
-  text-align: center;
-}
+#topic-overlay-1 { left: 0; }
+#topic-overlay-2 { right: 0; }
 
 /* ── Screen 4: Puzzle ────────────────────────────────── */
 .puzzle-left-panel,
