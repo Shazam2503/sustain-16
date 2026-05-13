@@ -363,6 +363,57 @@ body {
   max-width: 160px;
 }
 
+/* How to Play modal */
+.htp-box {
+  background: #f9f6f0;
+  border-radius: 16px;
+  padding: 36px 40px;
+  max-width: 520px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(42, 26, 14, 0.18);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.htp-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 1.15rem;
+  color: #2a1a0e;
+  cursor: pointer;
+  padding: 4px 6px;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+.htp-close:hover { opacity: 1; }
+
+.htp-heading {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  color: #2a1a0e;
+  margin-bottom: 20px;
+}
+
+.htp-list {
+  list-style: decimal;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.htp-list li {
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+  color: #2a1a0e;
+  line-height: 1.7;
+}
+
 /* Loss modal */
 .modal-overlay {
   position: fixed;

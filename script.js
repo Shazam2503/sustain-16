@@ -314,6 +314,7 @@ function initPuzzle1() {
   banner.textContent = '';
   banner.classList.add('hidden');
   document.getElementById('loss-modal').classList.add('hidden');
+  document.getElementById('htp-modal').classList.add('hidden');
   document.getElementById('knowledge-nugget-btn').classList.add('hidden');
 }
 
@@ -339,6 +340,16 @@ document.querySelector('.topic-right').addEventListener('click', function () {
 
 document.getElementById('submit-btn').addEventListener('click', onSubmit);
 document.getElementById('hint-btn').addEventListener('click', onHint);
+
+document.querySelector('.how-to-play-link').addEventListener('click', function () {
+  document.getElementById('htp-modal').classList.remove('hidden');
+});
+document.getElementById('htp-close').addEventListener('click', function () {
+  document.getElementById('htp-modal').classList.add('hidden');
+});
+document.getElementById('htp-modal').addEventListener('click', function (e) {
+  if (e.target === this) this.classList.add('hidden');
+});
 
 document.getElementById('knowledge-nugget-btn').addEventListener('click', function () {
   showScreen('screen-end-1');
