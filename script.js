@@ -425,7 +425,7 @@ function initPuzzle() {
 }
 
 // ── Event listeners ───────────────────────────────────────────────────────────
-document.getElementById('play-btn-overlay').addEventListener('click', function () {
+document.getElementById('play-btn').addEventListener('click', function () {
   showScreen('screen-mode');
 });
 

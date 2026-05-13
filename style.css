@@ -55,15 +55,22 @@ body {
   display: block;
 }
 
-#play-btn-overlay {
+.play-btn {
   position: absolute;
-  top: 65%;
-  left: 35%;
-  width: 30%;
-  height: 12%;
-  cursor: pointer;
-  background: transparent;
+  top: 72%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ea7832;
+  color: #fff;
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  border: none;
   border-radius: 50px;
+  padding: 16px 48px;
+  cursor: pointer;
+  white-space: nowrap;
+  animation: pulse-float 2s ease-in-out infinite;
 }
 
 /* ── Screen 2: Mode Select ───────────────────────────── */
