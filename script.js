@@ -1,6 +1,3 @@
-// ── Config ──────────────────────────────────────────────────────────────────
-const ARCHETYPE_UNLOCK_THRESHOLD = 2;
-
 // ── Puzzle 1 data ────────────────────────────────────────────────────────────
 const PUZZLE1_GROUPS = [
   {
@@ -29,7 +26,7 @@ const PUZZLE1_GROUPS = [
   }
 ];
 
-const ARCHETYPES = {
+const ARCHETYPES1 = {
   actions_solutions: {
     name:  'The Activist ✊',
     image: 'images/activist.jpeg',
@@ -52,6 +49,79 @@ const ARCHETYPES = {
   }
 };
 
+// ── Puzzle 2 data ────────────────────────────────────────────────────────────
+const PUZZLE2_GROUPS = [
+  {
+    id: 'systems_people',
+    label: 'Where most of your power goes',
+    color: '#6b9b4e',
+    words: ['DRYER', 'HEATING', 'WATER BOILER', 'AIR-CON']
+  },
+  {
+    id: 'places_observation',
+    label: 'Water-saving spots around the home',
+    color: '#3a7ca5',
+    words: ['SHOWER', 'TAP', 'TOILET', 'GARDEN']
+  },
+  {
+    id: 'actions_solutions',
+    label: 'Features that cut your energy bill',
+    color: '#ea7832',
+    words: ['SOLAR', 'LED', 'INSULATION', 'DOUBLE WINDOW GLAZING']
+  },
+  {
+    id: 'causes_mechanisms',
+    label: 'Surprisingly sustainable building materials',
+    color: '#d9554a',
+    words: ['TIMBER', 'BAMBOO', 'MUD', 'CLAY']
+  }
+];
+
+const ARCHETYPES2 = {
+  systems_people: {
+    name:  'The Observer 👁',
+    image: 'images/observer.jpeg',
+    text:  "You spotted where the power goes first. Take 5 minutes tonight to check which appliance in your home runs the longest each day — there's usually one quiet energy thief you didn't suspect."
+  },
+  places_observation: {
+    name:  'The Explorer 🧭',
+    image: 'images/explorer.jpeg',
+    text:  "You think about where things happen. Pick one room in your home today and find one way to save water there — most of us can cut 30% without even noticing."
+  },
+  actions_solutions: {
+    name:  'The Activist ✊',
+    image: 'images/activist.jpeg',
+    text:  "You went straight to the solutions. Pick one upgrade you could realistically push for in your current home — even renters can ask landlords about LED bulbs or sealing draughts."
+  },
+  causes_mechanisms: {
+    name:  'The Scientist 🔬',
+    image: 'images/scientist.jpeg',
+    text:  "You see what others overlook. Read one article tonight on natural building materials — mud, clay, and bamboo are quietly outperforming concrete on every sustainability metric that matters."
+  }
+};
+
+// ── Theme configs ─────────────────────────────────────────────────────────────
+const THEME1_CONFIG = {
+  groups:          PUZZLE1_GROUPS,
+  archetypes:      ARCHETYPES1,
+  lsPrefix:        'theme1_',
+  topicHeading:    "Today's theme: Off the beaten path, on purpose.",
+  knowledgeNugget: "Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.",
+  knowledgeLink:     null,
+  knowledgeLinkText: null
+};
+
+const THEME2_CONFIG = {
+  groups:          PUZZLE2_GROUPS,
+  archetypes:      ARCHETYPES2,
+  lsPrefix:        'theme2_',
+  topicHeading:    "Today's theme: Closer to home than you think.",
+  knowledgeNugget: "Buildings produce nearly 40% of global energy-related carbon emissions, and most of that comes from how we heat, cool, and run our homes - not from the buildings themselves. The good news: simple swaps make a huge difference. A low-flow showerhead can cut water use by around 50%. LED bulbs use up to 80% less energy than old incandescents. And some of the most sustainable building materials are also the oldest - mud, clay, timber, and bamboo were standard long before concrete dominated, and they're quietly making a comeback in eco-architecture today.",
+  knowledgeLink:     'https://www.unep.org/news-and-stories/story/heres-how-buildings-contribute-climate-change-and-what-can-be-done-about-it',
+  knowledgeLinkText: 'Go deeper on building emissions →'
+};
+
+// ── Shared constants ──────────────────────────────────────────────────────────
 const TEMP_LABELS = [
   'Stable climate',
   'Rising temperatures',
@@ -60,7 +130,6 @@ const TEMP_LABELS = [
   'Tipping point reached.'
 ];
 
-// Bulb colour at each mistake count (0–4)
 const BULB_COLORS = [
   'rgba(255,255,255,0.35)',
   '#3a7ca5',
@@ -69,7 +138,8 @@ const BULB_COLORS = [
   '#d9554a'
 ];
 
-// ── Puzzle 1 state ───────────────────────────────────────────────────────────
+// ── Game state ────────────────────────────────────────────────────────────────
+var currentThemeConfig = null;
 var p1 = {};
 
 function resetP1State() {
@@ -85,7 +155,7 @@ function resetP1State() {
   };
 }
 
-// ── Screen navigation ────────────────────────────────────────────────────────
+// ── Screen navigation ─────────────────────────────────────────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function (s) {
     s.classList.remove('active');
@@ -93,7 +163,7 @@ function showScreen(id) {
   document.getElementById(id).classList.add('active');
 }
 
-// ── Shuffle ──────────────────────────────────────────────────────────────────
+// ── Shuffle ───────────────────────────────────────────────────────────────────
 function shuffle(arr) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {
@@ -103,13 +173,13 @@ function shuffle(arr) {
   return a;
 }
 
-// ── Grid rendering ───────────────────────────────────────────────────────────
+// ── Grid rendering ────────────────────────────────────────────────────────────
 function renderGrid() {
   var grid = document.getElementById('puzzle-grid');
   grid.innerHTML = '';
 
   var words = shuffle(
-    PUZZLE1_GROUPS
+    currentThemeConfig.groups
       .filter(function (g) { return !p1.solvedIds.includes(g.id); })
       .reduce(function (acc, g) { return acc.concat(g.words); }, [])
   );
@@ -141,12 +211,12 @@ function updateSubmitBtn() {
   document.getElementById('submit-btn').disabled = (p1.selected.length !== 4);
 }
 
-// ── Submission ───────────────────────────────────────────────────────────────
+// ── Submission ────────────────────────────────────────────────────────────────
 function onSubmit() {
   if (p1.selected.length !== 4 || p1.gameOver) return;
 
   var sel = p1.selected;
-  var group = PUZZLE1_GROUPS.find(function (g) {
+  var group = currentThemeConfig.groups.find(function (g) {
     return !p1.solvedIds.includes(g.id) &&
            sel.length === g.words.length &&
            sel.every(function (w) { return g.words.includes(w); });
@@ -161,7 +231,7 @@ function onSubmit() {
       renderGrid();
       updateSubmitBtn();
       updateHintBtn();
-      if (p1.solvedIds.length === PUZZLE1_GROUPS.length) endGame(true);
+      if (p1.solvedIds.length === currentThemeConfig.groups.length) endGame(true);
     });
   } else {
     flashSelected('flash-wrong', function () {
@@ -186,7 +256,7 @@ function flashSelected(cls, callback) {
   }, 800);
 }
 
-// ── Solved group card (left panel) ───────────────────────────────────────────
+// ── Solved group card (left panel) ────────────────────────────────────────────
 function addSolvedGroupCard(group) {
   var panel = document.getElementById('solved-groups-panel');
   var div = document.createElement('div');
@@ -198,7 +268,7 @@ function addSolvedGroupCard(group) {
   panel.appendChild(div);
 }
 
-// ── Thermometer gauge ────────────────────────────────────────────────────────
+// ── Thermometer gauge ─────────────────────────────────────────────────────────
 function updateGauge() {
   var fillPercent = (p1.mistakes / 4) * 100;
   document.getElementById('thermo-fill').style.height = fillPercent + '%';
@@ -206,9 +276,9 @@ function updateGauge() {
   document.getElementById('temp-label-text').textContent = TEMP_LABELS[p1.mistakes];
 }
 
-// ── Hint ─────────────────────────────────────────────────────────────────────
+// ── Hint ──────────────────────────────────────────────────────────────────────
 function updateHintBtn() {
-  var unsolved  = PUZZLE1_GROUPS.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  var unsolved  = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
   var available = unsolved.filter(function (g) { return !p1.hintsShownIds.includes(g.id); });
   document.getElementById('hint-btn').disabled =
     unsolved.length <= 1 || p1.isHintShowing || available.length === 0;
@@ -216,7 +286,7 @@ function updateHintBtn() {
 
 function onHint() {
   if (p1.isHintShowing || p1.gameOver) return;
-  var unsolved  = PUZZLE1_GROUPS.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  var unsolved  = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
   var available = unsolved.filter(function (g) { return !p1.hintsShownIds.includes(g.id); });
   if (available.length === 0 || unsolved.length <= 1) return;
 
@@ -237,12 +307,13 @@ function onHint() {
   }, 7000);
 }
 
-// ── Game end ─────────────────────────────────────────────────────────────────
+// ── Game end ──────────────────────────────────────────────────────────────────
 function saveResults(won) {
-  localStorage.setItem('theme1_firstGroup', p1.firstGroupId || '');
-  localStorage.setItem('theme1_mistakes',   p1.mistakes);
-  localStorage.setItem('theme1_hintsUsed',  p1.hintsUsed);
-  localStorage.setItem('theme1_result',     won ? 'win' : 'loss');
+  var prefix = currentThemeConfig.lsPrefix;
+  localStorage.setItem(prefix + 'firstGroup', p1.firstGroupId || '');
+  localStorage.setItem(prefix + 'mistakes',   p1.mistakes);
+  localStorage.setItem(prefix + 'hintsUsed',  p1.hintsUsed);
+  localStorage.setItem(prefix + 'result',     won ? 'win' : 'loss');
 
   if (p1.firstGroupId) {
     var key  = 'archetype_' + p1.firstGroupId;
@@ -256,7 +327,7 @@ function saveResults(won) {
 }
 
 function revealAllGroups(onComplete) {
-  var unsolved = PUZZLE1_GROUPS.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  var unsolved = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
   var delay = 0;
 
   unsolved.forEach(function (group) {
@@ -294,8 +365,8 @@ function showKnowledgeNuggetBtn() {
 
 function endGame(won) {
   p1.gameOver = true;
-  var completed = saveResults(won);
-  prepareEndScreen1(won);
+  saveResults(won);
+  prepareEndScreen(won);
 
   if (won) {
     document.getElementById('puzzle-grid').classList.add('hidden');
@@ -310,8 +381,8 @@ function endGame(won) {
   }
 }
 
-// ── End screen setup ─────────────────────────────────────────────────────────
-function prepareEndScreen1(won) {
+// ── End screen setup ──────────────────────────────────────────────────────────
+function prepareEndScreen(won) {
   var teaser = document.getElementById('archetype-teaser');
   if (won && p1.firstGroupId) {
     teaser.classList.remove('hidden');
@@ -321,9 +392,22 @@ function prepareEndScreen1(won) {
   document.getElementById('archetype-modal').classList.add('hidden');
 }
 
-// ── Puzzle 1 initialise ──────────────────────────────────────────────────────
-function initPuzzle1() {
+function prepareEndScreenContent() {
+  document.getElementById('fact-card-text').textContent = currentThemeConfig.knowledgeNugget;
+  var link = document.getElementById('knowledge-link');
+  if (currentThemeConfig.knowledgeLink) {
+    link.textContent = currentThemeConfig.knowledgeLinkText;
+    link.href = currentThemeConfig.knowledgeLink;
+    link.classList.remove('hidden');
+  } else {
+    link.classList.add('hidden');
+  }
+}
+
+// ── Puzzle initialise ─────────────────────────────────────────────────────────
+function initPuzzle() {
   resetP1State();
+  document.getElementById('topic-heading').textContent = currentThemeConfig.topicHeading;
   renderGrid();
   updateSubmitBtn();
   updateGauge();
@@ -340,7 +424,7 @@ function initPuzzle1() {
   document.querySelector('.puzzle-actions').classList.remove('hidden');
 }
 
-// ── Event listeners ──────────────────────────────────────────────────────────
+// ── Event listeners ───────────────────────────────────────────────────────────
 document.getElementById('play-btn-overlay').addEventListener('click', function () {
   showScreen('screen-mode');
 });
@@ -351,13 +435,16 @@ document.querySelector('.mode-single').addEventListener('click', function () {
 
 document.querySelector('.topic-left').addEventListener('click', function () {
   localStorage.setItem('selectedTheme', '1');
-  initPuzzle1();
+  currentThemeConfig = THEME1_CONFIG;
+  initPuzzle();
   showScreen('screen-puzzle-1');
 });
 
 document.querySelector('.topic-right').addEventListener('click', function () {
   localStorage.setItem('selectedTheme', '2');
-  showScreen('screen-puzzle-2');
+  currentThemeConfig = THEME2_CONFIG;
+  initPuzzle();
+  showScreen('screen-puzzle-1');
 });
 
 document.getElementById('submit-btn').addEventListener('click', onSubmit);
@@ -374,11 +461,12 @@ document.getElementById('htp-modal').addEventListener('click', function (e) {
 });
 
 document.getElementById('knowledge-nugget-btn').addEventListener('click', function () {
+  prepareEndScreenContent();
   showScreen('screen-end-1');
 });
 
 document.getElementById('archetype-teaser').addEventListener('click', function () {
-  var archetype = ARCHETYPES[p1.firstGroupId];
+  var archetype = currentThemeConfig.archetypes[p1.firstGroupId];
   if (!archetype) return;
   document.getElementById('archetype-img').src = archetype.image;
   document.getElementById('archetype-img').alt = archetype.name;

@@ -548,6 +548,20 @@ body {
   text-align: center;
 }
 
+/* Knowledge link (Theme 2 end screen) */
+.knowledge-link {
+  display: block;
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.88rem, 1.3vw, 1rem);
+  color: #ea7832;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 8px;
+}
+.knowledge-link:hover { text-decoration: underline; }
+.knowledge-link.hidden { display: none; }
+
 /* Archetype teaser (pulsing banner on Screen 5) */
 @keyframes pulse-float {
   0%, 100% { transform: translateY(0); }

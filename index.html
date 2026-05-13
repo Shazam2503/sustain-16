@@ -44,6 +44,7 @@
       <div class="topic-half topic-right">
         <div class="topic-content">
           <span class="topic-title">Theme 2</span>
+          <span class="topic-subtitle">Closer to home than you think.</span>
         </div>
       </div>
     </div>
@@ -55,7 +56,7 @@
         <div id="solved-groups-panel"></div>
       </div>
       <div class="puzzle-centre">
-        <p class="topic-heading">Today's theme: Off the beaten path, on purpose.</p>
+        <p id="topic-heading" class="topic-heading">Today's theme: Off the beaten path, on purpose.</p>
         <div id="hint-banner" class="hint-banner hidden"></div>
         <div id="victory-message" class="victory-message hidden">
           <p class="victory-title">🎊 Victory 🎊</p>
@@ -106,17 +107,16 @@
       </div>
     </div>
 
-    <!-- Screen 4b: Puzzle 2 - Theme 2 (placeholder) -->
-    <div id="screen-puzzle-2" class="screen">
-      <p>Puzzle 2 — coming soon</p>
-    </div>
+    <!-- Screen 4b: unused — Theme 2 reuses screen-puzzle-1 via currentThemeConfig -->
+    <div id="screen-puzzle-2" class="screen"></div>
 
     <!-- Screen 5a: End Screen - Theme 1 -->
     <div id="screen-end-1" class="screen">
       <div class="end-content">
         <div class="fact-card">
           <h2 class="fact-card-heading">Knowledge Nugget 💡</h2>
-          <p class="fact-card-text">Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.</p>
+          <p id="fact-card-text" class="fact-card-text">Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.</p>
+          <a id="knowledge-link" class="knowledge-link hidden" target="_blank" rel="noopener noreferrer"></a>
         </div>
         <div id="archetype-teaser" class="archetype-teaser hidden">
           Curious what your Solver DNA reveals about your personality? Tap to find out!
