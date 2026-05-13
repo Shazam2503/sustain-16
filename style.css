@@ -55,11 +55,14 @@ body {
   display: block;
 }
 
-.play-btn {
+.play-btn-wrap {
   position: absolute;
   top: 72%;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.play-btn {
   background: #ea7832;
   color: #fff;
   font-family: 'Aileron', system-ui, sans-serif;
@@ -70,6 +73,7 @@ body {
   padding: 16px 48px;
   cursor: pointer;
   white-space: nowrap;
+  display: block;
   animation: pulse-float 2s ease-in-out infinite;
 }
 
