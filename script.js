@@ -107,8 +107,8 @@ const THEME1_CONFIG = {
   lsPrefix:        'theme1_',
   topicHeading:    "Today's theme: Off the beaten path, on purpose.",
   knowledgeNugget: "Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.",
-  knowledgeLink:     null,
-  knowledgeLinkText: null
+  knowledgeLink:     'https://ecotourism.org/what-is-ecotourism/',
+  knowledgeLinkText: 'The longer read →'
 };
 
 const THEME2_CONFIG = {
