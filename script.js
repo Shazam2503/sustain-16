@@ -278,17 +278,20 @@ function updateGauge() {
 
 // ── Hint ──────────────────────────────────────────────────────────────────────
 function updateHintBtn() {
-  var unsolved  = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
-  var available = unsolved.filter(function (g) { return !p1.hintsShownIds.includes(g.id); });
-  document.getElementById('hint-btn').disabled =
-    unsolved.length <= 1 || p1.isHintShowing || available.length === 0;
+  var unsolved = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  document.getElementById('hint-btn').disabled = p1.isHintShowing || unsolved.length === 0;
 }
 
 function onHint() {
   if (p1.isHintShowing || p1.gameOver) return;
-  var unsolved  = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  var unsolved = currentThemeConfig.groups.filter(function (g) { return !p1.solvedIds.includes(g.id); });
+  if (unsolved.length === 0) return;
+
   var available = unsolved.filter(function (g) { return !p1.hintsShownIds.includes(g.id); });
-  if (available.length === 0 || unsolved.length <= 1) return;
+  if (available.length === 0) {
+    p1.hintsShownIds = [];
+    available = unsolved;
+  }
 
   var group = available[0];
   p1.hintsShownIds.push(group.id);
