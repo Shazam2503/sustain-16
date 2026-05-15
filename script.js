@@ -16,7 +16,7 @@ const PUZZLE1_GROUPS = [
     id: 'causes_mechanisms',
     label: 'What makes tourism eco',
     color: '#ea7832',
-    words: ['CONSERVATION', 'SUSTAINABILITY', 'EDUCATION', 'RESPECT']
+    words: ['CONSERVATION', 'SUSTAINABILITY', 'EDUCATION']
   },
   {
     id: 'systems_people',
@@ -61,7 +61,7 @@ const PUZZLE2_GROUPS = [
     id: 'places_observation',
     label: 'Water-saving spots around the home',
     color: '#3a7ca5',
-    words: ['SHOWER', 'TAP', 'TOILET', 'GARDEN']
+    words: ['SHOWER', 'TAP', 'TOILET']
   },
   {
     id: 'actions_solutions',
@@ -102,23 +102,27 @@ const ARCHETYPES2 = {
 
 // ── Theme configs ─────────────────────────────────────────────────────────────
 const THEME1_CONFIG = {
-  groups:          PUZZLE1_GROUPS,
-  archetypes:      ARCHETYPES1,
-  lsPrefix:        'theme1_',
-  topicHeading:    "Today's theme: Off the beaten path, on purpose.",
-  knowledgeNugget: "Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.",
-  knowledgeLink:     'https://ecotourism.org/what-is-ecotourism/',
-  knowledgeLinkText: 'The longer read →'
+  groups:           PUZZLE1_GROUPS,
+  archetypes:       ARCHETYPES1,
+  lsPrefix:         'theme1_',
+  topicHeading:     "Today's theme: Off the beaten path, on purpose.",
+  knowledgeNugget:  "Ecotourism is one of the fastest-growing segments of the global tourism industry, but the term has no single, universally binding legal definition. The International Ecotourism Society defines genuine ecotourism through 7 principles: covering impact reduction, cultural awareness, conservation funding, community empowerment, and low-impact design. Without these, it's just tourism with a green label.",
+  knowledgeLink:    'https://ecotourism.org/what-is-ecotourism/',
+  knowledgeLinkText:'The longer read →',
+  decoyWord:        'RESORT',
+  decoyWarning:     '⚠️ Beware - The decoy word is a place you can travel to.. but it\'s the opposite of an eco one! Don\'t let it sneak into a group; keep it eliminated till the end.'
 };
 
 const THEME2_CONFIG = {
-  groups:          PUZZLE2_GROUPS,
-  archetypes:      ARCHETYPES2,
-  lsPrefix:        'theme2_',
-  topicHeading:    "Today's theme: Closer to home than you think.",
-  knowledgeNugget: "Buildings produce nearly 40% of global energy-related carbon emissions, and most of that comes from how we heat, cool, and run our homes - not from the buildings themselves. The good news: simple swaps make a huge difference. A low-flow showerhead can cut water use by around 50%. LED bulbs use up to 80% less energy than old incandescents. And some of the most sustainable building materials are also the oldest - mud, clay, timber, and bamboo were standard long before concrete dominated, and they're quietly making a comeback in eco-architecture today.",
-  knowledgeLink:     'https://www.unep.org/news-and-stories/story/heres-how-buildings-contribute-climate-change-and-what-can-be-done-about-it',
-  knowledgeLinkText: 'Go deeper on building emissions →'
+  groups:           PUZZLE2_GROUPS,
+  archetypes:       ARCHETYPES2,
+  lsPrefix:         'theme2_',
+  topicHeading:     "Today's theme: Closer to home than you think.",
+  knowledgeNugget:  "Buildings produce nearly 40% of global energy-related carbon emissions, and most of that comes from how we heat, cool, and run our homes - not from the buildings themselves. The good news: simple swaps make a huge difference. A low-flow showerhead can cut water use by around 50%. LED bulbs use up to 80% less energy than old incandescents. And some of the most sustainable building materials are also the oldest - mud, clay, timber, and bamboo were standard long before concrete dominated, and they're quietly making a comeback in eco-architecture today.",
+  knowledgeLink:    'https://www.unep.org/news-and-stories/story/heres-how-buildings-contribute-climate-change-and-what-can-be-done-about-it',
+  knowledgeLinkText:'Go deeper on building emissions →',
+  decoyWord:        'CONCRETE',
+  decoyWarning:     '⚠️ Beware – The decoy word is a building material, but a high-carbon one.. not sustainable at all! Don\'t let it sneak into a group; keep it eliminated till the end.'
 };
 
 // ── Shared constants ──────────────────────────────────────────────────────────
@@ -182,6 +186,7 @@ function renderGrid() {
     currentThemeConfig.groups
       .filter(function (g) { return !p1.solvedIds.includes(g.id); })
       .reduce(function (acc, g) { return acc.concat(g.words); }, [])
+      .concat([currentThemeConfig.decoyWord])
   );
 
   words.forEach(function (word) {
@@ -208,14 +213,32 @@ function onTileClick(tile, word) {
 }
 
 function updateSubmitBtn() {
-  document.getElementById('submit-btn').disabled = (p1.selected.length !== 4);
+  document.getElementById('submit-btn').disabled = (p1.selected.length < 3);
 }
 
 // ── Submission ────────────────────────────────────────────────────────────────
 function onSubmit() {
-  if (p1.selected.length !== 4 || p1.gameOver) return;
+  if (p1.selected.length < 3 || p1.gameOver) return;
 
   var sel = p1.selected;
+
+  // If the decoy is in the selection, count as wrong and show special popup
+  if (sel.includes(currentThemeConfig.decoyWord)) {
+    flashSelected('flash-wrong', function () {
+      p1.mistakes++;
+      p1.selected = [];
+      document.querySelectorAll('#puzzle-grid .word-tile').forEach(function (t) {
+        t.classList.remove('selected');
+      });
+      updateSubmitBtn();
+      updateGauge();
+      showDecoyPopup(function () {
+        if (p1.mistakes >= 4) endGame(false);
+      });
+    });
+    return;
+  }
+
   var group = currentThemeConfig.groups.find(function (g) {
     return !p1.solvedIds.includes(g.id) &&
            sel.length === g.words.length &&
@@ -231,7 +254,9 @@ function onSubmit() {
       renderGrid();
       updateSubmitBtn();
       updateHintBtn();
-      if (p1.solvedIds.length === currentThemeConfig.groups.length) endGame(true);
+      if (p1.solvedIds.length === currentThemeConfig.groups.length) {
+        triggerDecoyReveal();
+      }
     });
   } else {
     flashSelected('flash-wrong', function () {
@@ -265,6 +290,16 @@ function addSolvedGroupCard(group) {
   div.innerHTML =
     '<p class="solved-group-label" style="color:' + group.color + '">' + group.label + '</p>' +
     '<p class="solved-group-words">' + group.words.join(', ') + '</p>';
+  panel.appendChild(div);
+}
+
+function addDecoyCard() {
+  var panel = document.getElementById('solved-groups-panel');
+  var div = document.createElement('div');
+  div.className = 'solved-group decoy-group';
+  div.innerHTML =
+    '<p class="solved-group-label decoy-label">🎭 Decoy Word</p>' +
+    '<p class="solved-group-words">' + currentThemeConfig.decoyWord + '</p>';
   panel.appendChild(div);
 }
 
@@ -360,10 +395,49 @@ function showLossModal(onDismiss) {
   };
 }
 
+function showDecoyPopup(onDismiss) {
+  var popup = document.getElementById('decoy-popup');
+  popup.classList.remove('hidden');
+
+  document.getElementById('decoy-popup-ok').onclick = function () {
+    popup.classList.add('hidden');
+    onDismiss();
+  };
+}
+
 function showKnowledgeNuggetBtn() {
   document.getElementById('puzzle-grid').classList.add('hidden');
   document.querySelector('.puzzle-actions').classList.add('hidden');
   document.getElementById('knowledge-nugget-btn').classList.remove('hidden');
+}
+
+function triggerDecoyReveal() {
+  p1.gameOver = true;
+  saveResults(true);
+  prepareEndScreen(true);
+  document.getElementById('hint-btn').disabled = true;
+  document.getElementById('submit-btn').disabled = true;
+
+  setTimeout(function () {
+    var decoyWord = currentThemeConfig.decoyWord;
+    var tile = Array.from(document.querySelectorAll('#puzzle-grid .word-tile'))
+      .find(function (t) { return t.dataset.word === decoyWord; });
+
+    if (tile) {
+      tile.classList.add('decoy-exit');
+      setTimeout(function () {
+        addDecoyCard();
+        document.getElementById('puzzle-grid').classList.add('hidden');
+        document.getElementById('victory-message').classList.remove('hidden');
+        showKnowledgeNuggetBtn();
+      }, 600);
+    } else {
+      addDecoyCard();
+      document.getElementById('puzzle-grid').classList.add('hidden');
+      document.getElementById('victory-message').classList.remove('hidden');
+      showKnowledgeNuggetBtn();
+    }
+  }, 3000);
 }
 
 function endGame(won) {
@@ -371,17 +445,11 @@ function endGame(won) {
   saveResults(won);
   prepareEndScreen(won);
 
-  if (won) {
-    document.getElementById('puzzle-grid').classList.add('hidden');
-    document.getElementById('victory-message').classList.remove('hidden');
-    showKnowledgeNuggetBtn();
-  } else {
-    showLossModal(function () {
-      revealAllGroups(function () {
-        showKnowledgeNuggetBtn();
-      });
+  showLossModal(function () {
+    revealAllGroups(function () {
+      showKnowledgeNuggetBtn();
     });
-  }
+  });
 }
 
 // ── Countdown timer ───────────────────────────────────────────────────────────
@@ -448,6 +516,8 @@ function prepareEndScreenContent() {
 function initPuzzle() {
   resetP1State();
   document.getElementById('topic-heading').textContent = currentThemeConfig.topicHeading;
+  document.getElementById('decoy-warning').textContent = currentThemeConfig.decoyWarning;
+  document.getElementById('decoy-popup').classList.add('hidden');
   renderGrid();
   updateSubmitBtn();
   updateGauge();

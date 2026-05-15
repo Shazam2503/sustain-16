@@ -56,6 +56,7 @@
           <p class="victory-subtitle">You cracked them all!</p>
         </div>
         <div id="puzzle-grid" class="puzzle-grid"></div>
+        <p id="decoy-warning" class="decoy-warning"></p>
         <div class="puzzle-actions">
           <button id="hint-btn" class="hint-btn" disabled>Hint</button>
           <button id="submit-btn" class="submit-btn" disabled>Submit</button>
@@ -81,12 +82,12 @@
           <button id="htp-close" class="htp-close">✕</button>
           <h2 class="htp-heading">How to Play</h2>
           <ol class="htp-list">
-            <li>Find the four hidden groups. Every puzzle has 16 words that secretly belong to 4 groups of 4. Your job is to figure out which words go together.</li>
-            <li>Select four words you think belong together. Tap a word to select it. Tap again to deselect. When you've picked four, hit Submit.</li>
-            <li>Watch the colours reveal themselves. Get it right and the group locks in with a colour showing how tricky it was — green is the easiest, then blue, orange, and red is the trickiest. Get it wrong and you'll lose one of your four mistakes.</li>
-            <li>Stuck? Use a hint. Tap Hint to reveal one of the hidden group names. You'll still need to figure out which words belong to it.</li>
-            <li>Solve all four groups before you run out of mistakes. You have four chances. Use them wisely — the red group is always the trickiest, and some words look like they fit in more than one place.</li>
-            <li>Come back tomorrow. A new puzzle drops every day at midnight, with a brand-new sustainability theme to crack.</li>
+            <li>Find the four hidden groups — and the one decoy. Every puzzle has 16 words: 15 that belong to groups, and 1 decoy that belongs to none of them. Your job is to find the groups and figure out which word is the fake.</li>
+            <li>Watch out for the decoy word. It's designed to look like it fits, but it doesn't belong to any group. Select it in a guess and you'll lose a mistake — a warning will pop up to let you know it was in your selection.</li>
+            <li>Select words you think belong together, then hit Submit. Groups can be 3 or 4 words long — once you've selected enough, the Submit button lights up. Tap a word to select it, tap again to deselect.</li>
+            <li>Watch the colours reveal themselves. Solve a group correctly and it locks in with a colour showing how tricky it was — green is easiest, then blue, orange, and red is the trickiest. Get it wrong and you lose one of your four mistakes.</li>
+            <li>Stuck? Use a hint. Tap Hint to reveal one of the hidden group names. You'll still need to figure out which words belong to it — and you can cycle through hints as many times as you like.</li>
+            <li>Crack all four groups to unmask the decoy. Once every group is solved, the decoy word is finally revealed and added to your panel with its own card. It was hiding in plain sight all along. Come back tomorrow for a new theme and a new decoy to outwit.</li>
           </ol>
         </div>
       </div>
@@ -96,6 +97,14 @@
         <div class="modal-box">
           <p class="modal-text">Uh Oh! You're out of tries. No more attempts left for today.<br><br>Come back tomorrow for a new topic and another chance to play.<br><br>Now, it's time for the reveal!</p>
           <button id="loss-modal-ok" class="modal-ok-btn">OK</button>
+        </div>
+      </div>
+
+      <!-- Decoy popup modal -->
+      <div id="decoy-popup" class="modal-overlay hidden">
+        <div class="modal-box">
+          <p class="modal-text">Oops! The decoy word sneaked into your selection. Remove it from your guess and try again — it doesn't belong to any group.</p>
+          <button id="decoy-popup-ok" class="modal-ok-btn">Got it</button>
         </div>
       </div>
     </div>
