@@ -417,6 +417,8 @@ function triggerDecoyReveal() {
   prepareEndScreen(true);
   document.getElementById('hint-btn').disabled = true;
   document.getElementById('submit-btn').disabled = true;
+  document.getElementById('decoy-warning').style.display = 'none';
+  document.querySelector('.puzzle-actions').classList.add('hidden');
 
   setTimeout(function () {
     var decoyWord = currentThemeConfig.decoyWord;
@@ -516,7 +518,9 @@ function prepareEndScreenContent() {
 function initPuzzle() {
   resetP1State();
   document.getElementById('topic-heading').textContent = currentThemeConfig.topicHeading;
-  document.getElementById('decoy-warning').textContent = currentThemeConfig.decoyWarning;
+  var decoyWarningEl = document.getElementById('decoy-warning');
+  decoyWarningEl.textContent = currentThemeConfig.decoyWarning;
+  decoyWarningEl.style.display = '';
   document.getElementById('decoy-popup').classList.add('hidden');
   renderGrid();
   updateSubmitBtn();
