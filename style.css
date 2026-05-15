@@ -204,9 +204,12 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 130px);
   grid-auto-rows: 62px;
-  gap: 10px;
-  min-height: calc(4 * 62px + 3 * 10px);
+  gap: 1px;
+  min-height: calc(4 * 62px + 3 * 1px);
   align-content: start;
+  background: #c4a882;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 /* Word tiles */
@@ -217,7 +220,7 @@ body {
   font-weight: 700;
   font-size: 0.82rem;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
