@@ -449,6 +449,7 @@ function endGame(won) {
 
   showLossModal(function () {
     revealAllGroups(function () {
+      addDecoyCard();
       showKnowledgeNuggetBtn();
     });
   });
