@@ -361,6 +361,15 @@ body {
   text-align: center;
 }
 
+.thermo-tagline {
+  font-family: 'Aileron', system-ui, sans-serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #2a1a0e;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
 /* Thermometer shape */
 .thermometer {
   display: flex;

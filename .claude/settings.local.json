@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Copy-Item *)",
+      "Bash(Copy-Item \"C:\\\\Users\\\\urwar\\\\OneDrive\\\\Desktop\\\\sustain-16\\\\screen 2 images\\\\theme 1.png\" \"C:\\\\Users\\\\urwar\\\\OneDrive\\\\Desktop\\\\sustain-16\\\\images\\\\theme1.png\" -Force)",
+      "Bash(Copy-Item \"C:\\\\Users\\\\urwar\\\\OneDrive\\\\Desktop\\\\sustain-16\\\\screen 2 images\\\\theme 2.png\" \"C:\\\\Users\\\\urwar\\\\OneDrive\\\\Desktop\\\\sustain-16\\\\images\\\\theme2.png\" -Force)",
+      "Bash(Write-Output \"Done\")",
+      "Bash(Copy-Item *)"
+    ]
+  }
+}
